@@ -1,15 +1,4 @@
 :root {
   /* Primary colors */
-  --color-primary-white: #ffffff;
-  --color-primary-bg-lightcream: #fffefa;
-  /* --color-primary-sidebar-bg-blue: #0078d4; "The over-used blue" */
-  --color-primary-sidebar-bg-blue: #0067b5;
-  --color-primary-accents-orange: #f59e0b;
-  --color-primary-text-darkblue: #1e3a8a;
-
-  /* Supporting colors */
-  --color-sup-smalltext-gray: #6b7280;
-  --color-sup-hover-lightblue: #bedaff;
-  --color-sup-bg-cream: #fdf6e3;
-  --color-sup-check-green: #10b981;
+  --color-white: #ffffff;
 }
