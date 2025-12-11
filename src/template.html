@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="./img/favicon/favicon.ico" type="image/x-icon" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./img/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./img/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./img/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="./img/favicon/site.webmanifest" />
+    <title>Template</title>
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <!-- Sidebar -->
+      <aside class="sidebar-wrapper" id="sidebar-wrapper">
+        <div class="sidebar-header">
+          <button class="sidebar-action" id="site-title" data-action="home">
+            Template
+          </button>
+          <a
+            href="https://www.flaticon.com/free-icons/macaroni"
+            title="macaroni icons"
+          >
+            <img
+              src="./img/site-logo.png"
+              alt="Macaroni logo"
+              class="site-logo"
+            />
+          </a>
+        </div>
+        <nav class="sidebar-nav">
+          <ul class="nav-main-list">
+            <li class="nav-main-item">
+              <button class="sidebar-action" data-action="navNewTask">
+                Create New Task
+              </button>
+            </li>
+            <li class="nav-main-item">
+              <button class="sidebar-action" data-action="home">
+                Projects
+              </button>
+              <ul class="nav-sub-list">
+                <li class="nav-sub-item" id="sidebar-create-new-project">
+                  <button class="sidebar-action" data-action="navNewProject">
+                    Create New Project
+                  </button>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <!-- Main Content -->
+      <main class="main-content" id="main-content">
+        <dialog id="dialog-card-add-new-task">
+          <p>Add New Task (* required)</p>
+          <form id="form-card-add-new-task">
+            <div>
+              <label for="title-card-task">Title*:</label>
+              <input
+                type="text"
+                id="title-card-task"
+                name="title"
+                required
+                autofocus
+              />
+            </div>
+            <div>
+              <label for="details-card-task">Details:</label>
+              <textarea id="details-card-task" name="details"></textarea>
+            </div>
+            <div>
+              <label for="dueDate-card-task">Due Date:</label>
+              <input
+                type="datetime-local"
+                id="dueDate-card-task"
+                name="dueDate"
+              />
+            </div>
+            <div>
+              <label for="priority-card-task">Priority:</label>
+              <select id="priority-card-task" name="priority">
+                <option value="" disabled selected>Select an option</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+              </select>
+            </div>
+            <button
+              id="submit-button-card-task"
+              type="submit"
+              data-action="submitCardTask"
+            >
+              Submit
+            </button>
+            <button id="cancel-button-card-task" data-action="cancel">
+              Cancel
+            </button>
+          </form>
+        </dialog>
+      </main>
+    </div>
+  </body>
+</html>
