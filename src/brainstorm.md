@@ -21,6 +21,5 @@ Conclusion: for now, let's assume that Ship functions are only called by Gameboa
 
 List of functions:
 
-1. placeShip
-2. isSunk
-3. hit
+1. isSunk
+2. hit
