@@ -17,8 +17,26 @@ export class Gameboard {
     return this.board;
   };
 
-  placeShip = () => {
-    // handle placing a Ship on the board
+  placeShip = (ship, startPos, endPos) => {
+    // Ensure startPos is smaller than endPos
+    let start = startPos;
+    let end = endPos;
+    if (startPos > endPos) {
+      start = endPos;
+      end = startPos;
+    }
+    // Need logic to fill in the positions between start and end
+    if (start[0] === end[0]) {
+      // increment positions, keeping x constant
+      for (let i = start[1]; i <= end[1]; i++) {
+        this.board[start[0]][i].ship = ship;
+      }
+    } else if (start[1] === end[1]) {
+      // increment positions, keeping y constant
+      for (let i = start[0]; i <= end[0]; i++) {
+        this.board[i][start[1]].ship = ship;
+      }
+    }
   };
 
   receiveAttack = () => {
@@ -30,7 +48,7 @@ export class Gameboard {
 // Each node on the gameboard can have any of the following states
 export class Node {
   constructor() {
-    this.hasShip = false;
+    this.ship = null;
     this.hasShot = false;
   }
 }

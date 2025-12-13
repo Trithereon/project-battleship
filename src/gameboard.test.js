@@ -1,5 +1,6 @@
 // Gameboard Unit Tests
 import { Gameboard, Node } from "./gameboard";
+import Ship from "./ship";
 
 describe("Gameboard", () => {
   const gameboard = new Gameboard();
@@ -19,5 +20,26 @@ describe("Gameboard", () => {
         expect(node).toBeInstanceOf(Node);
       });
     });
+  });
+  test("placeShip stores a Ship object in its corresponding Nodes", () => {
+    const ship = new Ship(4);
+    gameboard.placeShip(ship, [6, 7], [6, 4]);
+    const board = gameboard.getBoard();
+    let shipPosition = [];
+    // Consider refactoring the following for loops using filter and forEach
+    for (let i = 0; i <= 9; i++) {
+      for (let j = 0; j <= 9; j++) {
+        if (board[i][j].ship) {
+          shipPosition.push([i, j]);
+          expect(board[i][j]).toEqual({ ship: ship, hasShot: false });
+        }
+      }
+    }
+    expect(shipPosition).toEqual([
+      [6, 4],
+      [6, 5],
+      [6, 6],
+      [6, 7],
+    ]);
   });
 });
