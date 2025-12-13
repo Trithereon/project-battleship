@@ -61,9 +61,13 @@ describe("Gameboard", () => {
     expect(board[6][7].hasShot).toBe(true);
   });
   test("checkGameEnd correctly identifies a game over", () => {
-    gameboard.getBoard().ships = [new Ship(1)];
+    gameboard.ships = [new Ship(1)];
     gameboard.placeShip(gameboard.ships[0], [0, 0], [0, 0]);
     gameboard.receiveAttack([0, 0]);
     expect(gameboard.checkGameEnd()).toBe(true);
+  });
+  test("checkGameEnd correctly identifies an ongoing game", () => {
+    gameboard.simulateShipPlacement();
+    expect(gameboard.checkGameEnd()).toBe(false);
   });
 });

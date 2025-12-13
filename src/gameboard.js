@@ -53,6 +53,7 @@ export class Gameboard {
     if (node.ship) {
       node.ship.hit();
       node.shoot();
+      this.checkGameEnd();
     } else {
       node.shoot();
     }
@@ -67,9 +68,9 @@ export class Gameboard {
   };
 
   checkGameEnd = () => {
-    this.ships.forEach((ship) => {
+    for (const ship of this.ships) {
       if (!ship.isSunk()) return false;
-    });
+    }
     return true;
   };
 }
