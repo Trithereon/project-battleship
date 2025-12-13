@@ -1,5 +1,7 @@
 // Gameboard class module
 
+import Ship from "./ship";
+
 export class Gameboard {
   constructor() {
     this.board = [];
@@ -11,6 +13,13 @@ export class Gameboard {
         this.board[i].push(new Node());
       }
     }
+    this.ships = [
+      new Ship(5),
+      new Ship(4),
+      new Ship(3),
+      new Ship(3),
+      new Ship(2),
+    ];
   }
 
   getBoard = () => {
@@ -48,9 +57,24 @@ export class Gameboard {
       node.shoot();
     }
   };
+
+  simulateShipPlacement = () => {
+    let counter = 0;
+    this.ships.forEach((ship) => {
+      this.placeShip(ship, [counter, 0], [counter, ship.length - 1]);
+      counter++;
+    });
+  };
+
+  checkGameEnd = () => {
+    this.ships.forEach((ship) => {
+      if (!ship.isSunk()) return false;
+    });
+    return true;
+  };
 }
 
-// Each node on the gameboard can have any of the following states
+// Each position on the gameboard stores a Node object
 export class Node {
   constructor() {
     this.ship = null;

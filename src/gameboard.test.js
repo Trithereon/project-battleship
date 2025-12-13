@@ -34,6 +34,7 @@ describe("Gameboard", () => {
       for (let j = 0; j <= 9; j++) {
         if (board[i][j].ship) {
           shipPosition.push([i, j]);
+          // eslint-disable-next-line jest/no-conditional-expect
           expect(board[i][j]).toMatchObject({ ship: ship, hasShot: false });
         }
       }
@@ -58,5 +59,11 @@ describe("Gameboard", () => {
     gameboard.receiveAttack([6, 7]);
     expect(board[6][7].ship.hitCount).toBe(1);
     expect(board[6][7].hasShot).toBe(true);
+  });
+  test("checkGameEnd correctly identifies a game over", () => {
+    gameboard.getBoard().ships = [new Ship(1)];
+    gameboard.placeShip(gameboard.ships[0], [0, 0], [0, 0]);
+    gameboard.receiveAttack([0, 0]);
+    expect(gameboard.checkGameEnd()).toBe(true);
   });
 });
