@@ -39,9 +39,14 @@ export class Gameboard {
     }
   };
 
-  receiveAttack = () => {
-    // handle receiving an attack
-    // TODO update all Gameboards with hit/miss shot coordinates
+  receiveAttack = (pos) => {
+    const node = this.board[pos[0]][pos[1]];
+    if (node.ship) {
+      node.ship.hit();
+      node.shoot();
+    } else {
+      node.shoot();
+    }
   };
 }
 
@@ -51,4 +56,7 @@ export class Node {
     this.ship = null;
     this.hasShot = false;
   }
+  shoot = () => {
+    this.hasShot = true;
+  };
 }

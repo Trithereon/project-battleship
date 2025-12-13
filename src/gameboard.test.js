@@ -3,7 +3,10 @@ import { Gameboard, Node } from "./gameboard";
 import Ship from "./ship";
 
 describe("Gameboard", () => {
-  const gameboard = new Gameboard();
+  let gameboard;
+  beforeEach(() => {
+    gameboard = new Gameboard();
+  });
 
   test("getBoard returns a 10x10 2D array of Nodes", () => {
     const board = gameboard.getBoard();
@@ -31,7 +34,7 @@ describe("Gameboard", () => {
       for (let j = 0; j <= 9; j++) {
         if (board[i][j].ship) {
           shipPosition.push([i, j]);
-          expect(board[i][j]).toEqual({ ship: ship, hasShot: false });
+          expect(board[i][j]).toMatchObject({ ship: ship, hasShot: false });
         }
       }
     }
@@ -41,5 +44,19 @@ describe("Gameboard", () => {
       [6, 6],
       [6, 7],
     ]);
+  });
+  test("receiveAttack correctly registers a miss", () => {
+    const board = gameboard.getBoard();
+    gameboard.receiveAttack([5, 5]);
+    expect(board[5][5].ship).toBeNull();
+    expect(board[5][5].hasShot).toBe(true);
+  });
+  test("receiveAttack correctly registers a hit", () => {
+    const ship = new Ship(4);
+    gameboard.placeShip(ship, [6, 7], [6, 4]);
+    const board = gameboard.getBoard();
+    gameboard.receiveAttack([6, 7]);
+    expect(board[6][7].ship.hitCount).toBe(1);
+    expect(board[6][7].hasShot).toBe(true);
   });
 });
