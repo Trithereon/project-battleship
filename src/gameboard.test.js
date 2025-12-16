@@ -67,6 +67,7 @@ describe("Gameboard", () => {
     expect(gameboard.checkGameEnd()).toBe(true);
   });
   test("checkGameEnd correctly identifies an ongoing game", () => {
+    gameboard.populateShips();
     gameboard.simulateShipPlacement();
     expect(gameboard.checkGameEnd()).toBe(false);
   });
