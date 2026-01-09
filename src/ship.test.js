@@ -3,7 +3,7 @@ import Ship from "./ship";
 
 describe("Ship", () => {
   let ship;
-  beforeEach(() => (ship = new Ship(2, "patrol boat")));
+  beforeEach(() => (ship = new Ship(2, "Patrol Boat")));
 
   test("hit() increments number of hits on the Ship", () => {
     expect(ship.hitCount).toBe(0);

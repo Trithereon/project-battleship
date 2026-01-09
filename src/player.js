@@ -11,4 +11,8 @@ export default class Player {
     // Temporary automatic ship placement.
     this.board.simulateShipPlacement();
   }
+
+  getBoard = () => {
+    return this.board;
+  };
 }

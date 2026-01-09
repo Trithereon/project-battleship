@@ -7,6 +7,8 @@ export class Gameboard {
     this.board = [];
     const rows = 10;
     const columns = 10;
+    this.rows = rows;
+    this.columns = columns;
     for (let i = 0; i < rows; i++) {
       this.board[i] = [];
       for (let j = 0; j < columns; j++) {
@@ -14,13 +16,21 @@ export class Gameboard {
       }
     }
     this.ships = [
-      new Ship(5),
-      new Ship(4),
-      new Ship(3),
-      new Ship(3),
-      new Ship(2),
+      new Ship(5, "Carrier"),
+      new Ship(4, "Battleship"),
+      new Ship(3, "Destroyer"),
+      new Ship(3, "Submarine"),
+      new Ship(2, "Patrol Boat"),
     ];
   }
+
+  getRows = () => {
+    return this.rows;
+  };
+
+  getColumns = () => {
+    return this.columns;
+  };
 
   getBoard = () => {
     return this.board;
