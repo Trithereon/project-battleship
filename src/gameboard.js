@@ -13,7 +13,13 @@ export class Gameboard {
         this.board[i].push(new Node());
       }
     }
-    this.ships = [];
+    this.ships = [
+      new Ship(5),
+      new Ship(4),
+      new Ship(3),
+      new Ship(3),
+      new Ship(2),
+    ];
   }
 
   getBoard = () => {
@@ -66,16 +72,6 @@ export class Gameboard {
       if (!ship.isSunk()) return false;
     }
     return true;
-  };
-
-  populateShips = () => {
-    this.ships = [
-      new Ship(5),
-      new Ship(4),
-      new Ship(3),
-      new Ship(3),
-      new Ship(2),
-    ];
   };
 }
 

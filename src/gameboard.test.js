@@ -26,6 +26,7 @@ describe("Gameboard", () => {
   });
   test("placeShip stores a Ship object in its corresponding Nodes", () => {
     const ship = new Ship(4);
+    gameboard.ships = [];
     gameboard.placeShip(ship, [6, 7], [6, 4]);
     const board = gameboard.getBoard();
     let shipPosition = [];
@@ -67,7 +68,6 @@ describe("Gameboard", () => {
     expect(gameboard.checkGameEnd()).toBe(true);
   });
   test("checkGameEnd correctly identifies an ongoing game", () => {
-    gameboard.populateShips();
     gameboard.simulateShipPlacement();
     expect(gameboard.checkGameEnd()).toBe(false);
   });
