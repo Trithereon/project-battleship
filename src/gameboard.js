@@ -36,14 +36,18 @@ export class Gameboard {
     return this.board;
   };
 
-  placeShip = (ship, startPos, endPos) => {
+  placeShip = (ship, startPos, direction) => {
     // Ensure startPos is smaller than endPos
     let start = startPos;
-    let end = endPos;
-    if (startPos > endPos) {
-      start = endPos;
-      end = startPos;
+    let end = [];
+    if (direction === "horizontal") {
+      end.push(startPos[0] + ship.length - 1);
+      end.push(startPos[1]);
+    } else if (direction === "vertical") {
+      end.push(startPos[0]);
+      end.push(startPos[1] + ship.length - 1);
     }
+
     // Need logic to fill in the positions between start and end
     if (start[0] === end[0]) {
       // increment positions, keeping x constant

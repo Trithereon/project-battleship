@@ -25,9 +25,9 @@ describe("Gameboard", () => {
     });
   });
   test("placeShip stores a Ship object in its corresponding Nodes", () => {
-    const ship = new Ship(4);
+    const ship = new Ship(4, "Battleship");
     gameboard.ships = [];
-    gameboard.placeShip(ship, [6, 7], [6, 4]);
+    gameboard.placeShip(ship, [6, 4], "vertical");
     const board = gameboard.getBoard();
     let shipPosition = [];
     // Consider refactoring the following for loops using filter and forEach
@@ -54,8 +54,8 @@ describe("Gameboard", () => {
     expect(board[5][5].hasShot).toBe(true);
   });
   test("receiveAttack correctly registers a hit", () => {
-    const ship = new Ship(4);
-    gameboard.placeShip(ship, [6, 7], [6, 4]);
+    const ship = new Ship(4, "Battleship");
+    gameboard.placeShip(ship, [6, 4], "vertical");
     const board = gameboard.getBoard();
     gameboard.receiveAttack([6, 7]);
     expect(board[6][7].ship.hitCount).toBe(1);
@@ -63,7 +63,7 @@ describe("Gameboard", () => {
   });
   test("checkGameEnd correctly identifies a game over", () => {
     gameboard.ships = [new Ship(1)];
-    gameboard.placeShip(gameboard.ships[0], [0, 0], [0, 0]);
+    gameboard.placeShip(gameboard.ships[0], [0, 0], "horizontal");
     gameboard.receiveAttack([0, 0]);
     expect(gameboard.checkGameEnd()).toBe(true);
   });

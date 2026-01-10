@@ -5,10 +5,11 @@ export default class UI {
   renderBoards = (player1, player2) => {
     // Human player board.
     const player1Container = document.querySelector(".player1-container");
-    player1Container.innerHTML = _createBoard(player1);
+    player1Container.innerHTML = _createBlankBoard(player1);
+
     // Computer player board.
     const player2Container = document.querySelector(".player2-container");
-    player2Container.innerHTML = _createBoard(player2);
+    player2Container.innerHTML = _createBlankBoard(player2);
   };
 }
 
@@ -20,7 +21,7 @@ const _createElement = (tag, classes, text) => {
   return element;
 };
 
-const _createBoard = (player) => {
+const _createBlankBoard = (player) => {
   let html = "<table>";
   const rows = player.getBoard().getRows();
   const cols = player.getBoard().getColumns();
@@ -46,4 +47,8 @@ const _createBoard = (player) => {
   }
   html += "</table>";
   return html;
+};
+
+const _renderShips = (player) => {
+  player.getBoard();
 };
