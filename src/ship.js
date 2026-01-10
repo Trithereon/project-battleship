@@ -5,6 +5,7 @@ export default class Ship {
     this.length = length;
     this.name = name;
     this.hitCount = 0;
+    this.direction = null;
   }
 
   hit = () => {
@@ -16,5 +17,9 @@ export default class Ship {
     if (this.hitCount === this.length) {
       return true;
     } else return false;
+  };
+
+  setDirection = (direction) => {
+    this.direction = direction;
   };
 }

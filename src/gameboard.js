@@ -41,9 +41,11 @@ export class Gameboard {
     let start = startPos;
     let end = [];
     if (direction === "horizontal") {
+      ship.setDirection("horizontal");
       end.push(startPos[0] + ship.length - 1);
       end.push(startPos[1]);
     } else if (direction === "vertical") {
+      ship.setDirection("vertical");
       end.push(startPos[0]);
       end.push(startPos[1] + ship.length - 1);
     }
@@ -76,7 +78,7 @@ export class Gameboard {
   simulateShipPlacement = () => {
     let counter = 0;
     this.ships.forEach((ship) => {
-      this.placeShip(ship, [counter, 0], [counter, ship.length - 1]);
+      this.placeShip(ship, [counter, 0], "horizontal");
       counter++;
     });
   };

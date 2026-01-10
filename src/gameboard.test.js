@@ -47,6 +47,13 @@ describe("Gameboard", () => {
       [6, 7],
     ]);
   });
+  test("placeShip updates the Ship's direction", () => {
+    const ship = new Ship(4, "Battleship");
+    gameboard.ships = [];
+    expect(ship.direction).toBeNull();
+    gameboard.placeShip(ship, [6, 4], "vertical");
+    expect(ship.direction).toBe("vertical");
+  });
   test("receiveAttack correctly registers a miss", () => {
     const board = gameboard.getBoard();
     gameboard.receiveAttack([5, 5]);

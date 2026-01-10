@@ -23,3 +23,36 @@ List of functions:
 
 1. isSunk
 2. hit
+
+## UI
+
+I am stuck on a problem here. I need to render the ships onto the board, but I don't know how.
+I could simply traverse the entire board and detect whether a ship is present on each Node, and change the cell color to red or something, but I want to instead print an SVG for each ship onto the board.
+
+What if I store the direction of the ship inside a class? That way, I could
+
+1. scan for the starting position of each ship,
+2. check its direction, and
+3. print the ship SVG in that direction.
+
+Which would be most appropriate?
+
+1. Ship
+2. Gameboard
+3. Player
+
+I think Ship would make the most sense.
+
+Ok now I have to figure out how I want to scan for ship starting position...
+
+I surely need to start at [0,0] and then either row by row or column by column. Should be arbitrary, so I'll choose row by row.
+
+What if I create a function like getShipPos(shipName) to return all positions occupied by a ship? Would that help?
+
+The UI function that will place a ship SVG onto the board needs three things:
+
+1. Ship name
+2. Ship starting position
+3. Ship direction
+
+What is the simplest way to get that information, from reading the board 2d array?
