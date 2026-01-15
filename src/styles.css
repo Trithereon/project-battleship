@@ -1,4 +1,26 @@
 :root {
   /* Primary colors */
   --color-white: #ffffff;
+  --color-blue: rgba(80, 185, 255, 0.5);
+  --color-darker-blue: rgba(80, 185, 255, 0.7);
+}
+
+td {
+  width: 52px;
+  height: 52px;
+  background: var(--color-blue);
+}
+
+td:hover {
+  background: var(--color-darker-blue);
+}
+
+div.player1-container,
+div.player2-container {
+  position: relative;
+}
+
+img.ship {
+  position: absolute;
+  pointer-events: none; /* Note: might need to remove this to enable drag-n-drop */
 }

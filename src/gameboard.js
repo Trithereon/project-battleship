@@ -36,18 +36,22 @@ export class Gameboard {
     return this.board;
   };
 
+  getShips = () => {
+    return this.ships;
+  };
+
   placeShip = (ship, startPos, direction) => {
-    // Ensure startPos is smaller than endPos
     let start = startPos;
     let end = [];
+    ship.setStartPos(startPos);
     if (direction === "horizontal") {
       ship.setDirection("horizontal");
-      end.push(startPos[0] + ship.length - 1);
+      end.push(startPos[0] + ship.getLength() - 1);
       end.push(startPos[1]);
     } else if (direction === "vertical") {
       ship.setDirection("vertical");
       end.push(startPos[0]);
-      end.push(startPos[1] + ship.length - 1);
+      end.push(startPos[1] + ship.getLength() - 1);
     }
 
     // Need logic to fill in the positions between start and end
@@ -78,7 +82,7 @@ export class Gameboard {
   simulateShipPlacement = () => {
     let counter = 0;
     this.ships.forEach((ship) => {
-      this.placeShip(ship, [counter, 0], "horizontal");
+      this.placeShip(ship, [counter, 0], "vertical");
       counter++;
     });
   };

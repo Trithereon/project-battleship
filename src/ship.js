@@ -6,6 +6,7 @@ export default class Ship {
     this.name = name;
     this.hitCount = 0;
     this.direction = null;
+    this.startPos = null;
   }
 
   hit = () => {
@@ -19,7 +20,27 @@ export default class Ship {
     } else return false;
   };
 
+  setStartPos = (startPos) => {
+    this.startPos = startPos;
+  };
+
+  getStartPos = () => {
+    return this.startPos;
+  };
+
   setDirection = (direction) => {
     this.direction = direction;
+  };
+
+  getDirection = () => {
+    return this.direction;
+  };
+
+  getName = () => {
+    return this.name;
+  };
+
+  getLength = () => {
+    return this.length;
   };
 }

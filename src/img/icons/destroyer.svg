@@ -1,11 +1,10 @@
 <svg
   xmlns="http://www.w3.org/2000/svg"
-  width="100%"
-  height="100%"
+  width="156"
+  height="50"
   viewBox="0 0 153 69"
   fill="grey"
   preserveAspectRatio="none"
-  start="17"
   axis="x"
   ship_length="3"
   sunk=""
