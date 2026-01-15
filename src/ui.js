@@ -25,6 +25,15 @@ export default class UI {
     const cell = _getTargetCell(player, position);
     cell.appendChild(fire);
     cell.classList.add("hit");
+
+    const dir = player
+      .getBoard()
+      .getBoard()
+      [position[0]][position[1]].getShip()
+      .getDirection();
+    if (dir === "vertical") {
+      fire.style.transform = "rotate(90deg)";
+    }
   };
 
   displayMiss = (player, position) => {
