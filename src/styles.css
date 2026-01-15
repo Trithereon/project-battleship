@@ -3,21 +3,46 @@
   --color-white: #ffffff;
   --color-blue: rgba(80, 185, 255, 0.5);
   --color-darker-blue: rgba(80, 185, 255, 0.7);
+  --color-red: rgba(255, 128, 80, 0.8);
+}
+
+table {
+  table-layout: fixed;
 }
 
 td {
   width: 52px;
   height: 52px;
   background: var(--color-blue);
+  font-size: 3rem;
+  text-align: center;
 }
 
 td:hover {
   background: var(--color-darker-blue);
 }
 
+td.hit {
+  background: var(--color-red);
+}
+
+td.hit,
+td.miss {
+  pointer-events: none; /* Not clickable */
+}
+
+img.fire {
+  display: block; /* Needed, to avoid resizing <td> */
+  height: 90%;
+  width: 80%;
+  justify-self: center;
+}
+
 div.player1-container,
 div.player2-container {
   position: relative;
+  width: 580px;
+  height: 564.391px;
 }
 
 img.ship {

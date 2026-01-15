@@ -4,6 +4,7 @@ import battleshipSVG from "./img/icons/battleship.svg";
 import destroyerSVG from "./img/icons/destroyer.svg";
 import submarineSVG from "./img/icons/submarine.svg";
 import patrolBoatSVG from "./img/icons/patrol-boat.svg";
+import fireGif from "./img/icons/fire.gif";
 
 export default class UI {
   constructor() {}
@@ -16,6 +17,20 @@ export default class UI {
     // Computer player board.
     const player2Container = document.querySelector(".player2-container");
     player2Container.innerHTML = _createBlankBoard(player2);
+  };
+
+  displayHit = (player, position) => {
+    const fire = _createElement("img", "fire");
+    fire.src = fireGif;
+    const cell = _getTargetCell(player, position);
+    cell.appendChild(fire);
+    cell.classList.add("hit");
+  };
+
+  displayMiss = (player, position) => {
+    const cell = _getTargetCell(player, position);
+    cell.textContent = "X";
+    cell.classList.add("miss");
   };
 }
 
@@ -97,4 +112,18 @@ const _renderShips = (player) => {
     }
     container.appendChild(shipElem);
   }
+};
+
+const _getTargetCell = (player, position) => {
+  let cell;
+  if (player.playerType === "human") {
+    cell = document.querySelector(
+      `div.player1-container td[data-x="${position[0]}"][data-y="${position[1]}"]`,
+    );
+  } else if (player.playerType === "computer") {
+    cell = document.querySelector(
+      `div.player2-container td[data-x="${position[0]}"][data-y="${position[1]}"]`,
+    );
+  }
+  return cell;
 };

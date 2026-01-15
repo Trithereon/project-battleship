@@ -82,7 +82,7 @@ export class Gameboard {
   simulateShipPlacement = () => {
     let counter = 0;
     this.ships.forEach((ship) => {
-      this.placeShip(ship, [counter, 0], "vertical");
+      this.placeShip(ship, [0, counter], "horizontal");
       counter++;
     });
   };
