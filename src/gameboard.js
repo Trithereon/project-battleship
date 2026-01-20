@@ -73,7 +73,7 @@ export class Gameboard {
     if (node.ship) {
       node.ship.hit();
       node.shoot();
-      this.checkGameEnd();
+      this.checkGameOver();
     } else {
       node.shoot();
     }
@@ -87,7 +87,7 @@ export class Gameboard {
     });
   };
 
-  checkGameEnd = () => {
+  checkGameOver = () => {
     for (const ship of this.ships) {
       if (!ship.isSunk()) return false;
     }
@@ -106,5 +106,8 @@ export class Node {
   };
   getShip = () => {
     return this.ship;
+  };
+  getStatus = () => {
+    return this.hasShot;
   };
 }

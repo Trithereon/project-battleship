@@ -4,22 +4,20 @@ import UI from "./ui.js";
 
 export default class Game {
   constructor() {
-    this.player1 = null;
-    this.player2 = null;
+    this.player1 = new Player("human");
+    this.player2 = new Player("computer");
     this.currentTurn = null;
     this.gameOver = false;
   }
 
-  init = () => {
-    // Initialize gameboards and players
+  initUI = () => {
     const ui = new UI();
-    const player1 = new Player("human");
-    const player2 = new Player("computer");
-    ui.renderBoards(player1, player2);
+    ui.renderBoards(this.player1, this.player2);
     this.setupEventListeners();
   };
 
   setupEventListeners = () => {
+    // Attack clicks.
     document
       .querySelector(".player2-container")
       .addEventListener("click", this.handleAttackClick);
@@ -27,7 +25,9 @@ export default class Game {
 
   handleAttackClick = (e) => {
     if (e.target.dataset.x) {
-      return `${e.target.dataset.x}, ${e.target.dataset.y}`;
+      const x = e.target.dataset.x;
+      const y = e.target.dataset.y;
+      this.player2.getBoard().receiveAttack([x, y]);
     }
   };
 }
