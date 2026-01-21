@@ -37,6 +37,12 @@ export default class Game {
     this.gameOver = false;
     this.ui = new UI();
     this.initUI();
+
+    while (this.gameOver === false) {
+      if (this.currentTurn === "human") {
+        return;
+      }
+    }
   };
 
   getRandomPlayer = () => {
@@ -70,7 +76,7 @@ export default class Game {
     this.gameOver = true;
   };
 
-  playRound = () => {
+  playGame = () => {
     // while (this.gameOver = false) play turns
     // start loop
     // player whose playerType === currentTurn, play turn.
