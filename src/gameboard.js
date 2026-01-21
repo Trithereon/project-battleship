@@ -73,9 +73,10 @@ export class Gameboard {
     if (node.ship) {
       node.ship.hit();
       node.shoot();
-      this.checkGameOver();
+      return "hit";
     } else {
       node.shoot();
+      return "miss";
     }
   };
 

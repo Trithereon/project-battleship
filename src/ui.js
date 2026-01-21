@@ -19,19 +19,19 @@ export default class UI {
     player2Container.innerHTML = _createBlankBoard(player2);
   };
 
-  displayHit = (player, position) => {
+  displayHit = (player, pos) => {
     const fire = _createElement("img", "fire");
     fire.src = fireGif;
-    const cell = _getTargetCell(player, position);
+    const cell = _getTargetCell(player, pos);
     cell.appendChild(fire);
     cell.classList.add("hit");
 
     const dir = player
       .getBoard()
       .getBoard()
-      [position[0]][position[1]].getShip()
+      [pos[0]][pos[1]].getShip()
       .getDirection();
-    if (dir === "vertical") {
+    if (player.playerType === "human" && dir === "vertical") {
       fire.style.transform = "rotate(90deg)";
     }
   };
@@ -40,6 +40,21 @@ export default class UI {
     const cell = _getTargetCell(player, position);
     cell.textContent = "X";
     cell.classList.add("miss");
+  };
+
+  displayVictory = () => {
+    const modal = document.querySelector("#gameOverModal");
+    modal.querySelector("h2").textContent = "VICTORY!";
+    modal.querySelector("p").textContent =
+      "Congratulations! You have won the game!";
+    modal.showModal();
+  };
+
+  displayDefeat = () => {
+    const modal = document.querySelector("#gameOverModal");
+    modal.querySelector("h2").textContent = "DEFEAT!";
+    modal.querySelector("p").textContent = "Alas! You were defeated in battle!";
+    modal.showModal();
   };
 }
 
