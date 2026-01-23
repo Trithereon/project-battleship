@@ -100,20 +100,18 @@ export class Gameboard {
 export class Node {
   constructor() {
     this.ship = null;
-    this.hasShot = false;
+    this.shotStatus = false;
   }
   shoot = () => {
-    this.hasShot = true;
+    this.shotStatus = true;
   };
   getShip = () => {
     return this.ship;
   };
   getStatus = () => {
-    return this.hasShot;
+    return this.shotStatus;
   };
-  isValidTarget = () => {
-    if (this.hasShot) {
-      return false;
-    } else return true;
+  getShotStatus = () => {
+    return this.shotStatus;
   };
 }

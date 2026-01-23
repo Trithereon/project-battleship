@@ -1,4 +1,5 @@
 // Game module.
+import AI from "./ai.js";
 import Player from "./player.js";
 import UI from "./ui.js";
 
@@ -9,7 +10,13 @@ export default class Game {
     this.currentTurn = this.getRandomPlayer();
     this.gameOver = false;
     this.ui = new UI();
+    this.ai = new AI("easy");
     this.initUI();
+
+    // If AI plays first:
+    if (this.currentTurn === "computer") this.playAITurn();
+
+    // If Human plays first, nothing happens until user attacks.
   }
 
   initUI = () => {
@@ -36,14 +43,13 @@ export default class Game {
     this.currentTurn = this.getRandomPlayer();
     this.gameOver = false;
     this.ui = new UI();
+    this.ai = new AI("easy");
     this.initUI();
 
-    // TODO: Complete this loop's logic or refactor completely.
-    while (this.gameOver === false) {
-      if (this.currentTurn === "human") {
-        return;
-      } else return;
-    }
+    // If AI plays first:
+    if (this.currentTurn === "computer") this.playAITurn();
+
+    // If Human plays first, nothing happens until user attacks.
   };
 
   getRandomPlayer = () => {
@@ -52,18 +58,24 @@ export default class Game {
   };
 
   handleAttackClick = (e) => {
+    // if statement to ensure click target is a valid cell.
     if (e.target.dataset.x) {
       const x = Number(e.target.dataset.x);
       const y = Number(e.target.dataset.y);
       const result = this.player2.getBoard().receiveAttack([x, y]);
+
+      // Process results of attack: update UI, check for game over.
       if (result === "hit") {
         this.ui.displayHit(this.player2, [x, y]);
         if (this.player2.getBoard().checkGameOver()) {
-          this.handleGameOver(this.player2);
+          return this.handleGameOver(this.player2);
         }
       } else if (result === "miss") {
         this.ui.displayMiss(this.player2, [x, y]);
       }
+
+      // Call AI to play its turn.
+      this.playAITurn();
     }
   };
 
@@ -77,11 +89,28 @@ export default class Game {
     this.gameOver = true;
   };
 
-  playGame = () => {
-    // while (this.gameOver = false) play turns
-    // start loop
-    // player whose playerType === currentTurn, play turn.
-    // currentTurn becomes opposing player
-    // end loop
+  playAITurn = () => {
+    // AI plays turn.
+    const shot = this.ai.playTurn(this.isValidTarget, this.player1.getBoard());
+    if (shot.result === "hit") {
+      this.ui.displayHit(this.player1, shot.position);
+      if (this.player1.getBoard().checkGameOver()) {
+        this.handleGameOver(this.player1);
+      }
+    } else if (shot.result === "miss") {
+      this.ui.displayMiss(this.player1, shot.position);
+    }
+    this.switchTurns();
+  };
+
+  switchTurns = () => {
+    if (this.currentTurn === "human") this.currentTurn = "computer";
+    else this.currentTurn = "human";
+  };
+
+  isValidTarget = (x, y) => {
+    const result = this.player1.getBoard().getBoard()[x][y].getShotStatus();
+    if (result) return false;
+    else return true;
   };
 }

@@ -6,34 +6,34 @@ export default class AI {
     this.shots = [];
   }
 
-  playTurn = () => {
+  playTurn = (isValidTarget, player1Board) => {
     let shot;
-    let x;
-    let y;
+    // Random play.
+    const target = this._getRandomTarget(isValidTarget);
 
-    shot = { position: [0, 0], result: "hit" };
-    this.updateShots(shot);
+    shot = {
+      position: target,
+      result: player1Board.receiveAttack(target),
+    };
+
+    this._updateShots(shot);
+    return shot;
   };
 
-  _getRandomTarget = () => {
+  _getRandomTarget = (isValidTarget) => {
     let x;
     let y;
 
     // get a random number between 0 and 9
-    // Math.floor(Math.random() * 10)
-
     // Loop through random positions until a valid one is selected.
-    x = Math.floor(Math.random() * 10);
-    y = Math.floor(Math.random() * 10);
-    if (player1) return [x, y];
+    do {
+      x = Math.floor(Math.random() * 10);
+      y = Math.floor(Math.random() * 10);
+    } while (!isValidTarget(x, y));
+    return [x, y];
   };
 
-  _isValid = (x, y) => {
-    if (this.player1.getBoard().getBoard()[x][y].isValidTarget()) return true;
-    else return false;
-  };
-
-  updateShots = (shot) => {
+  _updateShots = (shot) => {
     this.shots.push(shot);
   };
 }

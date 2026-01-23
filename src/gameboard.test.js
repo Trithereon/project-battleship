@@ -36,7 +36,7 @@ describe("Gameboard", () => {
         if (board[i][j].ship) {
           shipPosition.push([i, j]);
           // eslint-disable-next-line jest/no-conditional-expect
-          expect(board[i][j]).toMatchObject({ ship: ship, hasShot: false });
+          expect(board[i][j]).toMatchObject({ ship: ship, shotStatus: false });
         }
       }
     }
@@ -58,7 +58,7 @@ describe("Gameboard", () => {
     const board = gameboard.getBoard();
     gameboard.receiveAttack([5, 5]);
     expect(board[5][5].ship).toBeNull();
-    expect(board[5][5].hasShot).toBe(true);
+    expect(board[5][5].shotStatus).toBe(true);
   });
   test("receiveAttack correctly registers a hit", () => {
     const ship = new Ship(4, "Battleship");
@@ -66,7 +66,7 @@ describe("Gameboard", () => {
     const board = gameboard.getBoard();
     gameboard.receiveAttack([6, 7]);
     expect(board[6][7].ship.hitCount).toBe(1);
-    expect(board[6][7].hasShot).toBe(true);
+    expect(board[6][7].shotStatus).toBe(true);
   });
   test("checkGameOver correctly identifies a game over", () => {
     gameboard.ships = [new Ship(1)];
