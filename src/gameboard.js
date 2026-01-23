@@ -111,4 +111,9 @@ export class Node {
   getStatus = () => {
     return this.hasShot;
   };
+  isValidTarget = () => {
+    if (this.hasShot) {
+      return false;
+    } else return true;
+  };
 }
