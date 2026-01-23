@@ -1,9 +1,11 @@
 // AI module, the logic to handle the computer player's turn.
 
 export default class AI {
-  constructor(difficulty) {
+  constructor(difficulty, player) {
     this.difficulty = difficulty;
     this.shots = [];
+    this.rows = player.getBoard().getRows();
+    this.columns = player.getBoard().getColumns();
   }
 
   playTurn = (isValidTarget, player1Board) => {
@@ -27,8 +29,8 @@ export default class AI {
     // get a random number between 0 and 9
     // Loop through random positions until a valid one is selected.
     do {
-      x = Math.floor(Math.random() * 10);
-      y = Math.floor(Math.random() * 10);
+      x = Math.floor(Math.random() * this.columns);
+      y = Math.floor(Math.random() * this.rows);
     } while (!isValidTarget(x, y));
     return [x, y];
   };

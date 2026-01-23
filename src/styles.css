@@ -4,6 +4,7 @@
   --color-blue: rgba(80, 185, 255, 0.5);
   --color-darker-blue: rgba(80, 185, 255, 0.7);
   --color-red: rgba(255, 128, 80, 0.95);
+  user-select: none;
 }
 
 body {

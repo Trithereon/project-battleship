@@ -92,7 +92,6 @@ const _createBlankBoard = (player) => {
     }
     html += "</tr>";
   }
-
   html += "</table>";
 
   return html;

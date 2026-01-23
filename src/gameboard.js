@@ -3,10 +3,8 @@
 import Ship from "./ship";
 
 export class Gameboard {
-  constructor() {
+  constructor(rows, columns) {
     this.board = [];
-    const rows = 10;
-    const columns = 10;
     this.rows = rows;
     this.columns = columns;
     for (let i = 0; i < rows; i++) {

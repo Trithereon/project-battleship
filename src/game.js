@@ -10,7 +10,7 @@ export default class Game {
     this.currentTurn = this.getRandomPlayer();
     this.gameOver = false;
     this.ui = new UI();
-    this.ai = new AI("easy");
+    this.ai = new AI("easy", this.player2);
     this.initUI();
 
     // If AI plays first:
@@ -43,7 +43,7 @@ export default class Game {
     this.currentTurn = this.getRandomPlayer();
     this.gameOver = false;
     this.ui = new UI();
-    this.ai = new AI("easy");
+    this.ai = new AI("easy", this.player2);
     this.initUI();
 
     // If AI plays first:
