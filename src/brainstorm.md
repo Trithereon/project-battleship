@@ -56,3 +56,17 @@ The UI function that will place a ship SVG onto the board needs three things:
 3. Ship direction
 
 What is the simplest way to get that information, from reading the board 2d array?
+
+## AI
+
+I want two difficulty levels: easy, hard.
+
+How "easy" proceeds is to choose a random valid position on the board every turn.
+
+How "hard" proceeds is based on the state of the game.
+
+1. First attacks until a hit is achieved: random.
+2. After a hit, AI will randomly select one of four positions: x +/- 1, or y +/- 1 from previous hit position.
+3. Repeat step 2 until a second hit.
+4. After the second hit, keep firing shots along the same axis as the previous hits, until the ship is sunk.
+5. After a ship is sunk, start over at step 1.
