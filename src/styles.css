@@ -6,8 +6,26 @@
   --color-red: rgba(255, 128, 80, 0.95);
 }
 
-table {
-  table-layout: fixed;
+body {
+  display: flex;
+}
+
+#page-title {
+  text-align: center;
+}
+
+#main-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  min-width: 560px;
+}
+
+div.player1-container,
+div.player2-container {
+  position: relative;
+  flex-shrink: 0;
+  padding: 5px 5px;
 }
 
 td {
@@ -36,13 +54,6 @@ img.fire {
   height: 90%;
   width: 80%;
   justify-self: center;
-}
-
-div.player1-container,
-div.player2-container {
-  position: relative;
-  width: 580px;
-  height: 564.391px;
 }
 
 img.ship {

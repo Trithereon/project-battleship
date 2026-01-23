@@ -11,12 +11,14 @@ export default class UI {
   renderBoards = (player1, player2) => {
     // Human player board.
     const player1Container = document.querySelector(".player1-container");
-    player1Container.innerHTML = _createBlankBoard(player1);
+    const player1Board = player1Container.querySelector(".board-container");
+    player1Board.innerHTML = _createBlankBoard(player1);
     _renderShips(player1);
 
     // Computer player board.
     const player2Container = document.querySelector(".player2-container");
-    player2Container.innerHTML = _createBlankBoard(player2);
+    const player2Board = player2Container.querySelector(".board-container");
+    player2Board.innerHTML = _createBlankBoard(player2);
   };
 
   displayHit = (player, pos) => {
@@ -67,11 +69,11 @@ const _createElement = (tag, classes, text) => {
 };
 
 const _createBlankBoard = (player) => {
-  let html = "<table>";
   const rows = player.getBoard().getRows();
   const cols = player.getBoard().getColumns();
 
   // Column headers.
+  let html = "<table>";
   html += "<thead>";
   html += `<tr><th scope="col"></th>`;
   for (let c = 1; c <= cols; c++) {
@@ -90,7 +92,9 @@ const _createBlankBoard = (player) => {
     }
     html += "</tr>";
   }
+
   html += "</table>";
+
   return html;
 };
 

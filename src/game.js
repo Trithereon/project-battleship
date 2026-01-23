@@ -38,10 +38,11 @@ export default class Game {
     this.ui = new UI();
     this.initUI();
 
+    // TODO: Complete this loop's logic or refactor completely.
     while (this.gameOver === false) {
       if (this.currentTurn === "human") {
         return;
-      }
+      } else return;
     }
   };
 
