@@ -70,3 +70,10 @@ How "hard" proceeds is based on the state of the game.
 3. Repeat step 2 until a second hit.
 4. After the second hit, keep firing shots along the same axis as the previous hits, until the ship is sunk.
 5. After a ship is sunk, start over at step 1.
+
+## Settings
+
+1. Name = Human
+2. Difficulty = Hard
+3. Rows = 10
+4. Columns = 10

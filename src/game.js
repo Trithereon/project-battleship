@@ -2,15 +2,16 @@
 import AI from "./ai.js";
 import Player from "./player.js";
 import UI from "./ui.js";
+import { settings } from "./settings.js";
 
 export default class Game {
   constructor() {
-    this.player1 = new Player("human");
-    this.player2 = new Player("computer");
+    this.player1 = new Player("human", settings.rows, settings.rows);
+    this.player2 = new Player("computer", settings.rows, settings.columns);
     this.currentTurn = this.getRandomPlayer();
     this.gameOver = false;
     this.ui = new UI();
-    this.ai = new AI("easy", this.player2);
+    this.ai = new AI(settings.difficulty, this.player2);
     this.initUI();
 
     // If AI plays first:

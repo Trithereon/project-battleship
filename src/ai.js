@@ -3,15 +3,24 @@
 export default class AI {
   constructor(difficulty, player) {
     this.difficulty = difficulty;
-    this.shots = [];
+    this.shots = []; // Record of all previous shots.
+    this.encirclingShots = []; // Record of shots in encircling mode.
+    this.targetLineShots = []; // Record of shots in targetLine mode.
+    this.attackMode = "random"; // "random", "encircling", "targetLine" mode.
     this.rows = player.getBoard().getRows();
     this.columns = player.getBoard().getColumns();
   }
 
   playTurn = (isValidTarget, player1Board) => {
     let shot;
-    // Random play.
-    const target = this._getRandomTarget(isValidTarget);
+    let target;
+    if (this.attackMode === "encircling") {
+      target = this._getNextEncircleTarget(isValidTarget);
+    } else if (this.attackMode === "targetLine") {
+      target = this._getNextTargetLineTarget(isValidTarget);
+    } else {
+      target = this._getRandomTarget(isValidTarget);
+    }
 
     shot = {
       position: target,
@@ -19,7 +28,25 @@ export default class AI {
     };
 
     this._updateShots(shot);
+    this._updateAttackMode(shot);
+
     return shot;
+  };
+
+  _updateAttackMode = (shot) => {
+    // Enter Encircling mode.
+    if (shot.result === "hit" && this.attackMode === "random") {
+      this.attackMode = "encircling";
+    }
+    // Enter targetLine mode.
+    else if (shot.result === "hit" && this.attackMode === "encircling") {
+      this.encirclingShots = []; // Reset encircle history.
+      this.attackMode = "targetLine";
+    }
+  };
+
+  _getNextEncircleTarget = (isValidTarget) => {
+    return target;
   };
 
   _getRandomTarget = (isValidTarget) => {

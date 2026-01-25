@@ -71,7 +71,9 @@ export class Gameboard {
     if (node.ship) {
       node.ship.hit();
       node.shoot();
-      return "hit";
+      if (node.ship.isSunk()) {
+        return "sunk";
+      } else return "hit";
     } else {
       node.shoot();
       return "miss";
@@ -83,6 +85,12 @@ export class Gameboard {
     this.ships.forEach((ship) => {
       this.placeShip(ship, [counter, 0], "vertical");
       counter++;
+    });
+  };
+
+  placeShipsRandomly = () => {
+    this.ships.forEach((ship) => {
+      this.placeShip(ship, []);
     });
   };
 
