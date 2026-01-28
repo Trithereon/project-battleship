@@ -65,11 +65,17 @@ How "easy" proceeds is to choose a random valid position on the board every turn
 
 How "hard" proceeds is based on the state of the game.
 
+Algorithm:
+
 1. First attacks until a hit is achieved: random.
-2. After a hit, AI will randomly select one of four positions: x +/- 1, or y +/- 1 from previous hit position.
+2. After a hit, Encircling mode: AI will randomly select one of four positions: x +/- 1, or y +/- 1 from previous hit position.
 3. Repeat step 2 until a second hit.
-4. After the second hit, keep firing shots along the same axis as the previous hits, until the ship is sunk.
+4. After the second hit, TargetLine mode: keep firing shots along the same axis as the previous hits, until the ship is sunk.
 5. After a ship is sunk, start over at step 1.
+
+Wait! There is a problem: this algorithm poorly handles the situation where two hits on adjacent positions belong to two separate ships. If two ships are in parallel, they will never be sunk and the algorithm will revert back to random targeting instead of a more effective targeting strategy.
+
+I could add a conditional statement like "If there are misses on both ends of the hit line, revert back to encircling on either of the two hit positions".
 
 ## Settings
 
@@ -77,3 +83,16 @@ How "hard" proceeds is based on the state of the game.
 2. Difficulty = Hard
 3. Rows = 10
 4. Columns = 10
+
+## Random ship placement
+
+This is tricky, because the ship placement must be valid. I can't simply plug in random numbers. How about I try to come up with rules to follow. `placeShip(ship, startPos, direction)`
+
+1. First I should randomize the direction, because the limits on position are based on direction.
+2. If direction vertical:
+   1. startPos[0] or 'x' can be anything from 0 to this.columns - 1
+   2. startPos[1] or 'y' can be anything from 0 to this.rows - ship.getLength()
+3. If direction horizontal:
+   1. startPos[0] can be anything from 0 to this.columns - ship.getLength()
+   2. startPos[1] can be anything from 0 to this.rows - 1
+4. No position along the ship's length can already be occupied by another ship.
