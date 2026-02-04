@@ -6,6 +6,7 @@ export default class AI {
     this.shots = []; // Record of all previous shots.
     this.hits = []; // Record of hits.
     this.encirclingHits = []; // Hits while in encircling mode.
+    this.targetLineHits = [];
     this.attackMode = "random"; // "random", "encircling", "targetLine" mode.
     this.rows = player.getBoard().getRows();
     this.columns = player.getBoard().getColumns();
@@ -22,6 +23,9 @@ export default class AI {
       target = this._getRandomTarget(isValidTarget);
     }
 
+    // With target position determined,
+    // based on current attackMode strategy,
+    // fire a shot and store the result.
     shot = {
       position: target,
       result: player1Board.receiveAttack(target),
@@ -31,6 +35,13 @@ export default class AI {
     this._updateAttackMode(shot);
 
     return shot;
+  };
+
+  _updateShots = (shot) => {
+    this.shots.push(shot);
+    if (shot.result === "hit" || shot.result === "sunk") {
+      this.hits.push(shot);
+    }
   };
 
   _updateAttackMode = (shot) => {
@@ -55,7 +66,6 @@ export default class AI {
     const center = this.encirclingHits[0];
     const x = center.position[0];
     const y = center.position[1];
-
     const adjacentPositions = [
       [x, y - 1], // Up
       [x, y + 1], // Down
@@ -71,6 +81,7 @@ export default class AI {
     // Select a target at random.
     const randomIndex = Math.floor(Math.random() * validTargets.length);
 
+    // Return random adjacent valid target position, in [x,y] format.
     return validTargets[randomIndex];
   };
 
@@ -91,17 +102,20 @@ export default class AI {
     let dir;
     let adjacentPositions = [];
     // Sorting the hits by position to help this method find the ends of the line.
-    const lineHits = this.targetLineHits
+    // This sorts top-down if vertical, left-right if horizontal.
+    // lineHitsPos looks like [[x,y],[x2,y2],[x3,y3],...]
+    const lineHitsPos = this.targetLineHits
       .sort((a, b) => a.position - b.position)
       .map((hit) => hit.position);
 
     // Determine attack direction by lining up hits.
-    if (lineHits[0][0] === lineHits[1][0]) dir = "vertical";
-    else if (lineHits[0][1] === lineHits[1][1]) dir = "horizontal";
+    if (lineHitsPos[0][0] === lineHitsPos[1][0])
+      dir = "vertical"; // Compare x's
+    else if (lineHitsPos[0][1] === lineHitsPos[1][1]) dir = "horizontal"; // Compare y's
 
     // "first" and "last" hits along the line.
-    const firstHit = lineHits[0];
-    const lastHit = lineHits[lineHits.length - 1];
+    const firstHit = lineHitsPos[0];
+    const lastHit = lineHitsPos[lineHitsPos.length - 1];
     if (dir === "vertical") {
       adjacentPositions = [
         [firstHit[0], firstHit[1] - 1],
@@ -118,12 +132,5 @@ export default class AI {
     });
     const randomIndex = Math.floor(Math.random() * validTargets.length);
     return validTargets[randomIndex];
-  };
-
-  _updateShots = (shot) => {
-    this.shots.push(shot);
-    if (shot.result === "hit" || shot.result === "sunk") {
-      this.hits.push(shot);
-    }
   };
 }
