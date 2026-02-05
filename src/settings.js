@@ -2,7 +2,7 @@
 
 export const settings = {
   playerName: "human",
-  difficulty: "easy",
+  difficulty: "hard",
   rows: 10,
   columns: 10,
 };

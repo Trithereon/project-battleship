@@ -1,5 +1,7 @@
 // AI module, the logic to handle the computer player's turn.
 
+import { settings } from "./settings";
+
 export default class AI {
   constructor(difficulty, player) {
     this.difficulty = difficulty;
@@ -23,7 +25,7 @@ export default class AI {
       target = this._getRandomTarget(isValidTarget);
     }
 
-    // With target position determined,
+    // With target position now determined,
     // based on current attackMode strategy,
     // fire a shot and store the result.
     shot = {
@@ -55,9 +57,15 @@ export default class AI {
       }
       // Enter targetLine mode after a hit in Encircling mode.
       else if (this.attackMode === "encircling") {
-        this.encirclingHits.push(shot);
-        this.targetLineHits.push(...this.encirclingHits);
         this.attackMode = "targetLine";
+        this.encirclingHits.push(shot);
+        const length = this.encirclingHits.length;
+        this.targetLineHits.push(
+          this.encirclingHits[length - 1],
+          this.encirclingHits[length - 2],
+        );
+      } else if (this.attackMode === "targetLine") {
+        this.targetLineHits.push(shot);
       }
     }
   };
@@ -72,17 +80,24 @@ export default class AI {
       [x - 1, y], // Left
       [x + 1, y], // Right
     ];
-
     // Filter valid targets from 4 options.
     const validTargets = adjacentPositions.filter(([posX, posY]) => {
       return isValidTarget(posX, posY);
     });
 
-    // Select a target at random.
-    const randomIndex = Math.floor(Math.random() * validTargets.length);
-
-    // Return random adjacent valid target position, in [x,y] format.
-    return validTargets[randomIndex];
+    if (validTargets.length > 0) {
+      // Select a target at random.
+      const randomIndex = Math.floor(Math.random() * validTargets.length);
+      // Return random adjacent valid target position, in [x,y] format.
+      return validTargets[randomIndex];
+    } else if (validTargets.length <= 0) {
+      // No valid shots, so change center and try again.
+      this.encirclingHits.shift();
+      this._getNextEncircleTarget(isValidTarget);
+    } else {
+      console.log("MAJOR GLITCH IN GET NEXT ENCIRCLE TARGET");
+      return null;
+    }
   };
 
   _getRandomTarget = (isValidTarget) => {
@@ -92,8 +107,8 @@ export default class AI {
     // get a random number between 0 and 9
     // Loop through random positions until a valid one is selected.
     do {
-      x = Math.floor(Math.random() * this.columns);
-      y = Math.floor(Math.random() * this.rows);
+      x = Math.floor(Math.random() * settings.columns);
+      y = Math.floor(Math.random() * settings.rows);
     } while (!isValidTarget(x, y));
     return [x, y];
   };
@@ -103,9 +118,14 @@ export default class AI {
     let adjacentPositions = [];
     // Sorting the hits by position to help this method find the ends of the line.
     // This sorts top-down if vertical, left-right if horizontal.
+    // Uses the Pythagorean theorem to measure distance from [0,0] and compare
     // lineHitsPos looks like [[x,y],[x2,y2],[x3,y3],...]
     const lineHitsPos = this.targetLineHits
-      .sort((a, b) => a.position - b.position)
+      .sort((a, b) => {
+        const distA = Math.sqrt(a.position[0] ** 2 + a.position[1] ** 2);
+        const distB = Math.sqrt(b.position[0] ** 2 + b.position[1] ** 2);
+        return distA - distB;
+      })
       .map((hit) => hit.position);
 
     // Determine attack direction by lining up hits.
@@ -131,6 +151,14 @@ export default class AI {
       return isValidTarget(posX, posY);
     });
     const randomIndex = Math.floor(Math.random() * validTargets.length);
-    return validTargets[randomIndex];
+
+    if (validTargets[randomIndex]) return validTargets[randomIndex];
+    // returns null when the target line did not sink a ship, and both ends are misses.
+    // At this point in the algorithm, attackMode needs to be encircling.
+    else {
+      this.attackMode = "encircling";
+      this.targetLineHits = [];
+      return this._getNextEncircleTarget(isValidTarget);
+    }
   };
 }
