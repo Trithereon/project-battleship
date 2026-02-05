@@ -13,14 +13,18 @@ export default class UI {
     const player1Container = document.querySelector(".player1-container");
     const player1Board = player1Container.querySelector(".board-container");
     player1Board.innerHTML = _createBlankBoard(player1);
+    const player1Ships = player1Container.querySelector(".ships-container");
+    player1Ships.innerHTML = "";
     _renderShips(player1);
-
+    
     // Computer player board.
     const player2Container = document.querySelector(".player2-container");
     const player2Board = player2Container.querySelector(".board-container");
     player2Board.innerHTML = _createBlankBoard(player2);
+    const player2Ships = player2Container.querySelector(".ships-container");
+    player2Ships.innerHTML = "";
   };
-
+  
   displayHit = (player, pos) => {
     const fire = _createElement("img", "fire");
     fire.src = fireGif;
@@ -136,15 +140,16 @@ const _renderSingleShip = (player, ship) => {
   const shipDir = ship.getDirection();
 
   // Position ship <img> element.
-  let container;
+  let playerContainer;
   if (player.playerType === "human") {
-    container = document.querySelector(`div.player1-container`);
+    playerContainer = document.querySelector(`div.player1-container`);
   } else if (player.playerType === "computer") {
-    container = document.querySelector(`div.player2-container`);
+    playerContainer = document.querySelector(`div.player2-container`);
   }
-  const cell = container.querySelector(`td[data-x="${x}"][data-y="${y}"]`);
+  const shipsContainer = playerContainer.querySelector('div.ships-container');
+  const cell = playerContainer.querySelector(`td[data-x="${x}"][data-y="${y}"]`);
   const cellRect = cell.getBoundingClientRect(); // Cell position relative to viewport.
-  const containerRect = container.getBoundingClientRect(); // Container position relative to viewport.
+  const containerRect = playerContainer.getBoundingClientRect(); // Container position relative to viewport.
   shipElem.style.top = cellRect.top - containerRect.top + "px";
   shipElem.style.left = cellRect.left - containerRect.left + "px";
   // Handle rotation based on ship direction.
@@ -152,7 +157,7 @@ const _renderSingleShip = (player, ship) => {
     shipElem.style.transformOrigin = "26px 26px"; // Center of the startPos cell.
     shipElem.style.transform = "rotate(90deg)";
   }
-  container.appendChild(shipElem);
+  shipsContainer.appendChild(shipElem);
 };
 
 const _getTargetCell = (player, position) => {
