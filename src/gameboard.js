@@ -80,18 +80,21 @@ export class Gameboard {
     }
   };
 
-  simulateShipPlacement = () => {
-    let counter = 0;
+  simulateRandomShipPlacement = () => {
+    const dirs = ["vertical","horizontal"];
     this.ships.forEach((ship) => {
-      this.placeShip(ship, [counter, 0], "vertical");
-      counter++;
+      let pos; // [x,y]
+      // Select random direction.
+      let dir = dirs[Math.floor(Math.random()*2)]
+
+      // Filter board to make a list of valid positions for ship.
+      const validPositions = this.getBoard().filter(())
+      this.placeShip(ship, pos, dir);
     });
   };
 
-  placeShipsRandomly = () => {
-    this.ships.forEach((ship) => {
-      this.placeShip(ship, []);
-    });
+  _isValidShipPlacement = (ship) => {
+    this.getBoard();
   };
 
   checkGameOver = () => {

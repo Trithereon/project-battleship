@@ -9,8 +9,8 @@ export default class Player {
     // each player class, human or computer, should contain its own gameboard
     this.board = new Gameboard(settings.rows, settings.columns);
 
-    // Temporary automatic ship placement.
-    this.board.simulateShipPlacement();
+    // Automatic random ship placement.
+    this.board.simulateRandomShipPlacement();
   }
 
   getBoard = () => {
