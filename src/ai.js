@@ -41,7 +41,7 @@ export default class AI {
 
   _updateShots = (shot) => {
     this.shots.push(shot);
-    if (shot.result === "hit") {
+    if (shot.result === "hit" || shot.result === "sunk") {
       this.hits.push(shot);
     }
   };
@@ -61,10 +61,10 @@ export default class AI {
         this.encirclingHits.push(shot);
         const length = this.encirclingHits.length;
         // Handle encirclingHits emptying in some edge cases.
-        if (length === 1){
+        if (length === 1) {
           this.attackMode = "encircling";
           return;
-        } else if (length === 0){
+        } else if (length === 0) {
           this.attackMode = "random";
           return;
         }
@@ -76,13 +76,21 @@ export default class AI {
         this.targetLineHits.push(shot);
       }
     }
+    if (shot.result === "sunk") {
+      this.attackMode = "random";
+      this.targetLineHits = [];
+      this.encirclingHits = [];
+    }
   };
 
   _getNextEncircleTarget = (isValidTarget) => {
     let center = this.encirclingHits[0];
     // Handle case where encirclingHits becomes empty.
-    if(!center){
+    if (!center) {
       center = this.hits.shift();
+      if (!center) {
+        return this._getRandomTarget(isValidTarget);
+      }
     }
     const x = center.position[0];
     const y = center.position[1];
@@ -106,9 +114,6 @@ export default class AI {
       // No valid shots, so change center and try again.
       this.encirclingHits.shift();
       return this._getNextEncircleTarget(isValidTarget);
-    } else {
-      console.log("MAJOR GLITCH IN GET NEXT ENCIRCLE TARGET");
-      return null;
     }
   };
 

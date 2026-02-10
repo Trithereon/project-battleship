@@ -65,15 +65,18 @@ export default class UI {
   displayVictory = () => {
     const modal = document.querySelector("#game-over-modal");
     modal.querySelector("h2").textContent = "VICTORY!";
-    modal.querySelector("p").textContent =
+    modal.querySelector("p.first-line").textContent =
       "Congratulations! You have won the game!";
+    modal.querySelector("p.second-line").textContent = "";
     modal.showModal();
   };
 
   displayDefeat = () => {
     const modal = document.querySelector("#game-over-modal");
     modal.querySelector("h2").textContent = "DEFEAT!";
-    modal.querySelector("p").textContent = "Alas! You were defeated in battle!";
+    modal.querySelector("p.first-line").textContent =
+      "Alas! You were defeated in battle!";
+    modal.querySelector("p.second-line").textContent = "";
     modal.showModal();
   };
 }
