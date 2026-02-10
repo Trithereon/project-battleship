@@ -1,5 +1,6 @@
 // Gameboard class module
 
+import { settings } from "./settings";
 import Ship from "./ship";
 
 export class Gameboard {
@@ -81,20 +82,46 @@ export class Gameboard {
   };
 
   simulateRandomShipPlacement = () => {
-    const dirs = ["vertical","horizontal"];
+    const dirs = ["vertical", "horizontal"];
     this.ships.forEach((ship) => {
-      let pos; // [x,y]
-      // Select random direction.
-      let dir = dirs[Math.floor(Math.random()*2)]
+      let pos; // [x,y] format
+      const length = ship.getLength();
+      const dir = dirs[Math.floor(Math.random() * 2)];
+      do {
+        if (dir === "horizontal") {
+          // Generate random position where x is between 0 and #columns-length
+          const x = Math.floor(Math.random() * (settings.columns - length));
+          const y = Math.floor(Math.random() * settings.rows - 1);
+          pos = [x, y];
+        } else {
+          // vertical equivalent
+          const x = Math.floor(Math.random() * settings.columns - 1);
+          const y = Math.floor(Math.random() * (settings.rows - length));
+          pos = [x, y];
+        }
+      } while (!this._isValidShipPlacement(pos, length, dir)); // if invalid, try again.
 
-      // Filter board to make a list of valid positions for ship.
-      const validPositions = this.getBoard().filter(())
       this.placeShip(ship, pos, dir);
     });
   };
 
-  _isValidShipPlacement = (ship) => {
-    this.getBoard();
+  _isValidShipPlacement = (startPos, length, dir) => {
+    // Check each cell along the ship's length for invalid placement.
+    if (dir === "horizontal") {
+      // startPos[1] (y) remains constant.
+      for (let i = startPos[0]; i < startPos[0] + length - 1; i++) {
+        const hasShip = this.board[i][startPos[1]].getShip(); // TODO: FIX THIS LINE. GETTING 'CANNOT READ PROPERTIES OF UNDEFINED' so for some reason this.board[x][y] is undefined...
+        if (hasShip || i >= settings.columns) return false;
+      }
+    } else {
+      // vertical, so startPos[0] (x) remains constant.
+      for (let i = startPos[1]; i < startPos[1] + length - 1; i++) {
+        const hasShip = this.board[startPos[0]][i].getShip();
+        if (hasShip || i >= settings.rows) return false;
+      }
+    }
+    // If no cell triggers invalid, return true.
+    return true;
   };
 
   checkGameOver = () => {

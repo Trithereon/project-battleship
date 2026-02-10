@@ -96,3 +96,7 @@ This is tricky, because the ship placement must be valid. I can't simply plug in
    1. startPos[0] can be anything from 0 to this.columns - ship.getLength()
    2. startPos[1] can be anything from 0 to this.rows - 1
 4. No position along the ship's length can already be occupied by another ship.
+
+## Concerns
+
+1. The position format `[x,y]` is confusing. This code would benefit from a refactor to an object with two keys x and y instead. The position could then be called with `pos.x` and `pos.y`, instead of `pos[0]` and `pos[1]` which would make the code much more legible and easier to maintain.
