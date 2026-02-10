@@ -90,13 +90,13 @@ export class Gameboard {
       do {
         if (dir === "horizontal") {
           // Generate random position where x is between 0 and #columns-length
-          const x = Math.floor(Math.random() * (settings.columns - length));
-          const y = Math.floor(Math.random() * settings.rows - 1);
+          const x = Math.floor(Math.random() * (settings.columns - length + 1));
+          const y = Math.floor(Math.random() * settings.rows);
           pos = [x, y];
         } else {
           // vertical equivalent
-          const x = Math.floor(Math.random() * settings.columns - 1);
-          const y = Math.floor(Math.random() * (settings.rows - length));
+          const x = Math.floor(Math.random() * settings.columns);
+          const y = Math.floor(Math.random() * (settings.rows - length + 1));
           pos = [x, y];
         }
       } while (!this._isValidShipPlacement(pos, length, dir)); // if invalid, try again.
@@ -109,13 +109,13 @@ export class Gameboard {
     // Check each cell along the ship's length for invalid placement.
     if (dir === "horizontal") {
       // startPos[1] (y) remains constant.
-      for (let i = startPos[0]; i < startPos[0] + length - 1; i++) {
-        const hasShip = this.board[i][startPos[1]].getShip(); // TODO: FIX THIS LINE. GETTING 'CANNOT READ PROPERTIES OF UNDEFINED' so for some reason this.board[x][y] is undefined...
+      for (let i = startPos[0]; i < startPos[0] + length; i++) {
+        const hasShip = this.board[i][startPos[1]].getShip();
         if (hasShip || i >= settings.columns) return false;
       }
     } else {
       // vertical, so startPos[0] (x) remains constant.
-      for (let i = startPos[1]; i < startPos[1] + length - 1; i++) {
+      for (let i = startPos[1]; i < startPos[1] + length; i++) {
         const hasShip = this.board[startPos[0]][i].getShip();
         if (hasShip || i >= settings.rows) return false;
       }
