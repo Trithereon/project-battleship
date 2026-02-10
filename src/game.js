@@ -8,15 +8,13 @@ export default class Game {
   constructor() {
     this.player1 = new Player("human");
     this.player2 = new Player("computer");
-    this.currentTurn = this.getRandomPlayer();
+    this.currentTurn = this._getRandomPlayer();
     this.gameOver = false;
     this.ui = new UI();
     this.ai = new AI(settings.difficulty, this.player2);
     this.initUI();
 
-    // If AI plays first:
-    if (this.currentTurn === "computer") this.playAITurn();
-
+    this.ui.displayStartModal();
     // If Human plays first, nothing happens until user attacks.
   }
 
@@ -41,7 +39,7 @@ export default class Game {
   startNewGame = () => {
     this.player1 = new Player("human");
     this.player2 = new Player("computer");
-    this.currentTurn = this.getRandomPlayer();
+    this.currentTurn = this._getRandomPlayer();
     this.gameOver = false;
     this.ui = new UI();
     this.ai = new AI("hard", this.player2);
@@ -53,7 +51,7 @@ export default class Game {
     // If Human plays first, nothing happens until user attacks.
   };
 
-  getRandomPlayer = () => {
+  _getRandomPlayer = () => {
     if (Math.random() >= 0.5) return "human";
     else return "computer";
   };

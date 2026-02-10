@@ -16,7 +16,7 @@ export default class UI {
     const player1Ships = player1Container.querySelector(".ships-container");
     player1Ships.innerHTML = "";
     _renderShips(player1);
-    
+
     // Computer player board.
     const player2Container = document.querySelector(".player2-container");
     const player2Board = player2Container.querySelector(".board-container");
@@ -24,7 +24,7 @@ export default class UI {
     const player2Ships = player2Container.querySelector(".ships-container");
     player2Ships.innerHTML = "";
   };
-  
+
   displayHit = (player, pos) => {
     const fire = _createElement("img", "fire");
     fire.src = fireGif;
@@ -53,8 +53,17 @@ export default class UI {
     _renderSingleShip(player, ship);
   };
 
+  displayStartModal = () => {
+    const modal = document.querySelector("#game-over-modal");
+    modal.querySelector("h2").textContent = "Man your battle stations!";
+    modal.querySelector("p.first-line").textContent =
+      "The enemy has deployed an advanced computer program targeting our ships. ";
+    modal.querySelector("p.second-line").textContent = "You must defeat it!";
+    modal.showModal();
+  };
+
   displayVictory = () => {
-    const modal = document.querySelector("#gameOverModal");
+    const modal = document.querySelector("#game-over-modal");
     modal.querySelector("h2").textContent = "VICTORY!";
     modal.querySelector("p").textContent =
       "Congratulations! You have won the game!";
@@ -62,7 +71,7 @@ export default class UI {
   };
 
   displayDefeat = () => {
-    const modal = document.querySelector("#gameOverModal");
+    const modal = document.querySelector("#game-over-modal");
     modal.querySelector("h2").textContent = "DEFEAT!";
     modal.querySelector("p").textContent = "Alas! You were defeated in battle!";
     modal.showModal();
@@ -146,8 +155,10 @@ const _renderSingleShip = (player, ship) => {
   } else if (player.playerType === "computer") {
     playerContainer = document.querySelector(`div.player2-container`);
   }
-  const shipsContainer = playerContainer.querySelector('div.ships-container');
-  const cell = playerContainer.querySelector(`td[data-x="${x}"][data-y="${y}"]`);
+  const shipsContainer = playerContainer.querySelector("div.ships-container");
+  const cell = playerContainer.querySelector(
+    `td[data-x="${x}"][data-y="${y}"]`,
+  );
   const cellRect = cell.getBoundingClientRect(); // Cell position relative to viewport.
   const containerRect = playerContainer.getBoundingClientRect(); // Container position relative to viewport.
   shipElem.style.top = cellRect.top - containerRect.top + "px";

@@ -65,3 +65,7 @@ img.ship {
 button.dialog {
   padding: 8px 16px;
 }
+
+dialog#game-over-modal {
+  text-align: center;
+}
