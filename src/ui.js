@@ -15,7 +15,6 @@ export default class UI {
     player1Board.innerHTML = _createBlankBoard(player1);
     const player1Ships = player1Container.querySelector(".ships-container");
     player1Ships.innerHTML = "";
-    _renderShips(player1);
 
     // Computer player board.
     const player2Container = document.querySelector(".player2-container");
@@ -23,6 +22,14 @@ export default class UI {
     player2Board.innerHTML = _createBlankBoard(player2);
     const player2Ships = player2Container.querySelector(".ships-container");
     player2Ships.innerHTML = "";
+  };
+
+  renderShips = (player) => {
+    // Loop through ships and append each to board.
+    const ships = player.getBoard().getShips();
+    for (const ship of ships) {
+      _renderSingleShip(player, ship);
+    }
   };
 
   displayHit = (player, pos) => {
@@ -116,14 +123,6 @@ const _createBlankBoard = (player) => {
   html += "</table>";
 
   return html;
-};
-
-const _renderShips = (player) => {
-  // Loop through ships and append each to board.
-  const ships = player.getBoard().getShips();
-  for (const ship of ships) {
-    _renderSingleShip(player, ship);
-  }
 };
 
 const _renderSingleShip = (player, ship) => {

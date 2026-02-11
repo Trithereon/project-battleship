@@ -12,16 +12,12 @@ export default class Game {
     this.gameOver = false;
     this.ui = new UI();
     this.ai = new AI(settings.difficulty, this.player2);
-    this.initUI();
+    this.ui.renderBoards(this.player1, this.player2);
+    this.setupEventListeners();
 
     this.ui.displayStartModal();
     // If Human plays first, nothing happens until user attacks.
   }
-
-  initUI = () => {
-    this.ui.renderBoards(this.player1, this.player2);
-    this.setupEventListeners();
-  };
 
   setupEventListeners = () => {
     // Attack clicks.
@@ -34,6 +30,11 @@ export default class Game {
     form.addEventListener("submit", () => {
       this.startNewGame();
     });
+
+    // Randomize ship placement using R key.
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "KeyR") this.startNewGame();
+    });
   };
 
   startNewGame = () => {
@@ -43,7 +44,8 @@ export default class Game {
     this.gameOver = false;
     this.ui = new UI();
     this.ai = new AI("hard", this.player2);
-    this.initUI();
+    this.ui.renderBoards(this.player1, this.player2);
+    this.ui.renderShips(this.player1);
 
     // If AI plays first:
     if (this.currentTurn === "computer") this.playAITurn();
