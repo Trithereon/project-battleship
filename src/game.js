@@ -55,7 +55,7 @@ export default class Game {
     this.currentTurn = this._getRandomPlayer();
     this.gameOver = false;
     this.ui = new UI();
-    this.ai = new AI("hard", this.player2);
+    this.ai = new AI(settings.difficulty, this.player2);
     this.ui.renderBoards(this.player1, this.player2);
     this.ui.renderShips(this.player1);
 
@@ -129,7 +129,7 @@ export default class Game {
 
   isValidTarget = (x, y) => {
     // Out-of-bounds check.
-    if (x > settings.rows - 1 || x < 0 || y < 0 || y > settings.columns - 1) {
+    if (x > settings.columns - 1 || x < 0 || y < 0 || y > settings.rows - 1) {
       return false;
     }
     // Untouched position check.

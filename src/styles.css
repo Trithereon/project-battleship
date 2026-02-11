@@ -76,11 +76,11 @@ summary,
 details {
   outline: none;
   user-select: none;
+  padding-bottom: 8px;
 }
 summary:hover {
   text-shadow: #6e6e6e 2px 0 16px;
 }
-.form-group,
-summary {
+.form-group {
   padding: 4px;
 }
