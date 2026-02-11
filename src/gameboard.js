@@ -8,9 +8,9 @@ export class Gameboard {
     this.board = [];
     this.rows = rows;
     this.columns = columns;
-    for (let i = 0; i < rows; i++) {
+    for (let i = 0; i < columns; i++) {
       this.board[i] = [];
-      for (let j = 0; j < columns; j++) {
+      for (let j = 0; j < rows; j++) {
         this.board[i].push(new Node());
       }
     }
@@ -111,13 +111,13 @@ export class Gameboard {
       // startPos[1] (y) remains constant.
       for (let i = startPos[0]; i < startPos[0] + length; i++) {
         const hasShip = this.board[i][startPos[1]].getShip();
-        if (hasShip || i >= settings.columns) return false;
+        if (hasShip || i >= settings.rows) return false;
       }
     } else {
       // vertical, so startPos[0] (x) remains constant.
       for (let i = startPos[1]; i < startPos[1] + length; i++) {
         const hasShip = this.board[startPos[0]][i].getShip();
-        if (hasShip || i >= settings.rows) return false;
+        if (hasShip || i >= settings.columns) return false;
       }
     }
     // If no cell triggers invalid, return true.

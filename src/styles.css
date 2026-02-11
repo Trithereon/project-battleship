@@ -10,14 +10,14 @@
 
 body {
   display: flex;
-  background-color: var(--color-yellow);
+  /* background-color: var(--color-yellow); */
 }
 
-#page-title {
+#pageTitle {
   text-align: center;
 }
 
-#main-content {
+#mainContent {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -69,6 +69,18 @@ button.dialog {
   padding: 8px 16px;
 }
 
-dialog#game-over-modal {
+dialog#startNewGameModal {
   text-align: center;
+}
+summary,
+details {
+  outline: none;
+  user-select: none;
+}
+summary:hover {
+  text-shadow: #6e6e6e 2px 0 16px;
+}
+.form-group,
+summary {
+  padding: 4px;
 }

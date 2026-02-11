@@ -5,12 +5,15 @@ import destroyerSVG from "./img/icons/destroyer.svg";
 import submarineSVG from "./img/icons/submarine.svg";
 import patrolBoatSVG from "./img/icons/patrol-boat.svg";
 import fireGif from "./img/icons/fire.gif";
+import { settings } from "./settings";
 
 export default class UI {
   constructor() {}
   renderBoards = (player1, player2) => {
     // Human player board.
     const player1Container = document.querySelector(".player1-container");
+    const playerName = player1Container.querySelector("h2.board-title");
+    playerName.textContent = settings.playerName;
     const player1Board = player1Container.querySelector(".board-container");
     player1Board.innerHTML = _createBlankBoard(player1);
     const player1Ships = player1Container.querySelector(".ships-container");
@@ -61,7 +64,7 @@ export default class UI {
   };
 
   displayStartModal = () => {
-    const modal = document.querySelector("#game-over-modal");
+    const modal = document.querySelector("#startNewGameModal");
     modal.querySelector("h2").textContent = "Man your battle stations!";
     modal.querySelector("p.first-line").textContent =
       "The enemy has deployed an advanced computer program targeting our ships. ";
@@ -70,7 +73,7 @@ export default class UI {
   };
 
   displayVictory = () => {
-    const modal = document.querySelector("#game-over-modal");
+    const modal = document.querySelector("#startNewGameModal");
     modal.querySelector("h2").textContent = "VICTORY!";
     modal.querySelector("p.first-line").textContent =
       "Congratulations! You have won the game!";
@@ -79,7 +82,7 @@ export default class UI {
   };
 
   displayDefeat = () => {
-    const modal = document.querySelector("#game-over-modal");
+    const modal = document.querySelector("#startNewGameModal");
     modal.querySelector("h2").textContent = "DEFEAT!";
     modal.querySelector("p.first-line").textContent =
       "Alas! You were defeated in battle!";

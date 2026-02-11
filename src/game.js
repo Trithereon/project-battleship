@@ -26,9 +26,21 @@ export default class Game {
       .addEventListener("click", this.handleAttackClick);
 
     // Start new game button.
-    const form = document.getElementById("start-new-game");
-    form.addEventListener("submit", () => {
+    const modal = document.getElementById("startNewGameModal");
+    const form = document.getElementById("startNewGameForm");
+    const details = form.querySelector("details");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      // Get form data and update settings object.
+      const formData = new FormData(form);
+      settings.playerName = formData.get("playerName");
+      settings.difficulty = formData.get("difficulty");
+      settings.rows = formData.get("rows");
+      settings.columns = formData.get("columns");
+      // Start game.
       this.startNewGame();
+      details.open = false;
+      modal.close();
     });
 
     // Randomize ship placement using R key.
